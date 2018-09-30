@@ -1,1 +1,4 @@
-# Lab_MongoDB_TI-4601
+# Laboratorio - MongoDB
+
+### Base de datos hecha en MongoDB
+### Aplicación hecha en Python con PyMongo y PyQt
