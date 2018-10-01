@@ -1,12 +1,14 @@
+# coding=utf-8
 import pymongo
+from queries import *
 
 _client = pymongo.MongoClient("mongodb://localhost:27017/")
 _database = _client["LAB_DB"]
-_movies = _database["movies"]
 
-_query = { "country": "USA" }
+query1 = movie_info(_database, "Amélie")
 
-_docs = _movies.find(_query)
+print "-----------------------------------------------------"
 
-for doc in _docs:
-  print (doc["name"]) 
+query2 = movies_franchise(_database, "Rocky Franchise")
+
+
