@@ -1,8 +1,11 @@
- 
+#################################  QUERIES #############################################
+import pymongo
+
 # Returns specific movie information #
 def movie_info(pdb, pmovie):
-    return pdb["movies"].find_one( {"name":pmovie} )
-
+    _list = []
+    _list.append( pdb["movies"].find_one( {"name":pmovie} ) )
+    return _list
 # Returns movies information according to franchise #
 def movies_franchise(pdb, pfranchise):
     _movies = pdb["movies"]
