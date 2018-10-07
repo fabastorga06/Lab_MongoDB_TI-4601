@@ -66,3 +66,13 @@ def average_duration_movie(pdb):
         ]
     )
     return ( list(averages_per_producer) )
+
+
+#Insert new document in some collection of the database 
+def insert_new_doc(pdb, pdoc, pcollection):
+    _collection = pdb[pcollection]
+    _collection.insert_one(pdoc)
+
+
+def ask_data(pdb, pcollection, pkey):
+    return list( pdb[pcollection].find( {}, {pkey:1} ) ) 

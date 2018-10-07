@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from PyQt4 import QtCore, QtGui
 import sys
+from register_movie import *
+from register_company import *
 from controller import *
 from message import *
 from data_handler import *
@@ -29,7 +31,7 @@ class Ui_MovieModule(QtGui.QWidget):
         MovieModule.setObjectName(_fromUtf8("MovieModule"))
         MovieModule.resize(945, 671)
         self.label_logo = QtGui.QLabel(MovieModule)
-        self.label_logo.setGeometry(QtCore.QRect(380, 20, 281, 61))
+        self.label_logo.setGeometry(QtCore.QRect(10, 20, 281, 61))
         self.label_logo.setText(_fromUtf8(""))
         self.label_logo.setPixmap(QtGui.QPixmap(_fromUtf8("design/logo.png")))
         self.label_logo.setObjectName(_fromUtf8("label_logo"))
@@ -66,11 +68,7 @@ class Ui_MovieModule(QtGui.QWidget):
         self.franchise_data = QtGui.QComboBox(MovieModule)
         self.franchise_data.setGeometry(QtCore.QRect(120, 160, 171, 33))
         self.franchise_data.setObjectName(_fromUtf8("franchise_data"))
-        self.franchise_data.addItem(_fromUtf8(""))
-        self.franchise_data.addItem(_fromUtf8(""))
-        self.franchise_data.addItem(_fromUtf8(""))
-        self.franchise_data.addItem(_fromUtf8(""))
-        self.franchise_data.addItem(_fromUtf8(""))
+        
         self.movie_button = QtGui.QPushButton(MovieModule)
         self.movie_button.setGeometry(QtCore.QRect(400, 100, 121, 35))
         font = QtGui.QFont()
@@ -102,16 +100,7 @@ class Ui_MovieModule(QtGui.QWidget):
         self.producer_data = QtGui.QComboBox(MovieModule)
         self.producer_data.setGeometry(QtCore.QRect(700, 90, 211, 33))
         self.producer_data.setObjectName(_fromUtf8("producer_data"))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
-        self.producer_data.addItem(_fromUtf8(""))
+        
         self.movies_producer_button = QtGui.QPushButton(MovieModule)
         self.movies_producer_button.setGeometry(QtCore.QRect(770, 130, 141, 35))
         font = QtGui.QFont()
@@ -156,9 +145,6 @@ class Ui_MovieModule(QtGui.QWidget):
         self.movies_table.verticalHeader().setVisible(False)
         self.movies_table.setAlternatingRowColors(True)
         self.movies_table.verticalHeader().setDefaultSectionSize(20)
-
-
-
         self.movies_producer_table = QtGui.QTableWidget(MovieModule)
         self.movies_producer_table.setGeometry(QtCore.QRect(620, 170, 301, 141))
         self.movies_producer_table.setObjectName(_fromUtf8("movies_producer_table"))
@@ -233,34 +219,45 @@ class Ui_MovieModule(QtGui.QWidget):
         self.less_duration_data.setGeometry(QtCore.QRect(170, 540, 171, 41))
         self.less_duration_data.setObjectName(_fromUtf8("less_duration_data"))
         self.less_duration_data.setReadOnly(True)
-
+        self.register_button = QtGui.QPushButton(MovieModule)
+        self.register_button.setGeometry(QtCore.QRect(625, 20, 130, 35))
+        self.register_button.setFont(font)
+        self.register_button.setObjectName(_fromUtf8("register_button"))
+        self.company_button = QtGui.QPushButton(MovieModule)
+        self.company_button.setGeometry(QtCore.QRect(750, 20, 150, 35))
+        self.company_button.setFont(font)
+        self.company_button.setObjectName(_fromUtf8("company_button"))
+        self.franchises = None
+        self.companies = None
+        self.fill_tabs(self.franchises, self.franchise_data, 1)
+        self.fill_tabs(self.companies, self.producer_data, 0)
         self.retranslateUi(MovieModule)
         QtCore.QMetaObject.connectSlotsByName(MovieModule)
+    
+    def fill_tabs(self, pdata, pthing, pflag):
+        if (pflag):
+            _franchises = ask_field("movies", "franchise")
+            arr_franchises = serialize_data(_franchises, "franchise")
+            pdata = order_array(arr_franchises)
+        else:
+            _companies = ask_field("companies", "name")
+            pdata = serialize_data(_companies, "name")
+        pthing.clear()
+        for i in range( len(pdata) ):            
+            pthing.addItem(_fromUtf8(""))
+            pthing.setItemText(i, _translate("MovieModule", pdata[i], None))
 
     def retranslateUi(self, MovieModule):
         MovieModule.setWindowTitle(_translate("MovieModule", "Movieland", None))
         self.label_movie_title.setText(_translate("MovieModule", "Movie Title:", None))
         self.label_franchise.setText(_translate("MovieModule", "Franchise:", None))
         self.label_among_movies.setText(_translate("MovieModule", "Movies among                                and                               ", None))
-        self.franchise_data.setItemText(0, _translate("MovieModule", "Rocky Franchise", None))
-        self.franchise_data.setItemText(1, _translate("MovieModule", "Star Trek Franchise", None))
-        self.franchise_data.setItemText(2, _translate("MovieModule", "X-Men Franchise", None))
-        self.franchise_data.setItemText(3, _translate("MovieModule", "Shrek Franchise", None))
-        self.franchise_data.setItemText(4, _translate("MovieModule", "Madagascar Franchise", None))
         self.movie_button.setText(_translate("MovieModule", "Consult", None))
+        self.register_button.setText(_translate("MovieModule", "Register Movie", None))
+        self.company_button.setText(_translate("MovieModule", "Register Company", None))
         self.franchise_button.setText(_translate("MovieModule", "Consult", None))
         self.movies_among_years_data.setText(_translate("MovieModule", "Consult", None))
         self.label_producer.setText(_translate("MovieModule", "Producer:", None))
-        self.producer_data.setItemText(0, _translate("MovieModule", "DreamWorks", None))
-        self.producer_data.setItemText(1, _translate("MovieModule", "Marvel Studios", None))
-        self.producer_data.setItemText(2, _translate("MovieModule", "A24", None))
-        self.producer_data.setItemText(3, _translate("MovieModule", "Film France", None))
-        self.producer_data.setItemText(4, _translate("MovieModule", "Antena 3 Films", None))
-        self.producer_data.setItemText(5, _translate("MovieModule", "02 Filmes", None))
-        self.producer_data.setItemText(6, _translate("MovieModule", "UK Films", None))
-        self.producer_data.setItemText(7, _translate("MovieModule", "Miramax", None))
-        self.producer_data.setItemText(8, _translate("MovieModule", "Metro Goldwyn Mayer", None))
-        self.producer_data.setItemText(9, _translate("MovieModule", "StarTree Productions", None))
         self.movies_producer_button.setText(_translate("MovieModule", "Consult", None))
         item = self.movies_table.horizontalHeaderItem(0)
         item.setText(_translate("MovieModule", "NAME", None))
@@ -275,7 +272,7 @@ class Ui_MovieModule(QtGui.QWidget):
         item = self.movies_table.horizontalHeaderItem(5)
         item.setText(_translate("MovieModule", "YEAR", None))
         item = self.movies_table.horizontalHeaderItem(6)
-        item.setText(_translate("MovieModule", "DURATION", None))
+        item.setText(_translate("MovieModule", "DURATION(min)", None))
         item = self.movies_table.horizontalHeaderItem(7)
         item.setText(_translate("MovieModule", "COMPANY", None))
         item = self.movies_table.horizontalHeaderItem(8)
@@ -304,6 +301,15 @@ class Ui_MovieModule(QtGui.QWidget):
         self.high_duration_button.clicked.connect(self.ask_high_movie)
         self.amount_movies_button.clicked.connect(self.ask_amount_movies)
         self.avg_duration_producer_button.clicked.connect(self.ask_averages)
+        self.register_button.clicked.connect(lambda: self.register_screen(Ui_RegisterMovie(), MovieModule) )
+        self.company_button.clicked.connect(lambda: self.register_screen(Ui_RegisterCompany(), MovieModule) )
+
+    def register_screen(self, pscreen, pmain):
+        self.window = QtGui.QMainWindow()
+        self.ui = pscreen
+        self.ui.setupUi(self.window)
+        self.ui.set_main_module(pmain)
+        self.window.show()
 
     def clean_movies_table(self, ptable):
         ptable.setRowCount(0)

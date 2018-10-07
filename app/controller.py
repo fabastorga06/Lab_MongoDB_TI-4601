@@ -32,3 +32,9 @@ def amount_movies_request():
 def producer_averages_request():
     _avgs = average_duration_movie(_database)
     return _avgs
+
+def insert_document(pdocument, pcollection):
+    insert_new_doc(_database, pdocument, pcollection)
+  
+def ask_field(pcollection, pkey):
+    return ask_data(_database, pcollection, pkey)
