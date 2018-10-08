@@ -9,3 +9,6 @@ Para ejecutar la aplicación (asumiendo que el servidor de Mongo está corriendo
     $ python -B main.py
 
 
+### Interfaz Gráfica de Usuario
+
+![Movieland](https://github.com/fabastorga06/Lab_MongoDB_TI-4601/blob/master/ui.png)
